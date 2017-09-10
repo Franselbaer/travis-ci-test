@@ -7,8 +7,11 @@ language: python
 python:
   - 3.5
 
-install:
-  - docker build -t helloworld:latest .
-
-script:
-  docker run --rm helloworld:latest
+jobs:
+  include:
+    - stage: Build Docker Image
+    script:
+      - docker build -t helloworld:stage .
+    - stage: Test Docker Image
+    script: docker run --tm helloworld:stage
+    
