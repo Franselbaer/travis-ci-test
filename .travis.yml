@@ -14,4 +14,4 @@ jobs:
       - docker build -t helloworld:stage .
     - stage: test docker image
       script:
-      - docker run --tm helloworld:stage
+      - docker run --rm helloworld:stage
