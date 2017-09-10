@@ -18,3 +18,9 @@ jobs:
     - stage: test docker image
       script:
       - docker run --rm $DOCKER_USERNAME/helloworld:stage
+    - stage: upload image as :latest
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker pull $DOCKER_USERNAME/helloworld:stage
+      - docker tag $DOCKER_USERNAME/helloworld:stage $DOCKER_USERNAME/helloworld:latest
+      - docker push $DOCKER_USERNAME/helloworld:latest
