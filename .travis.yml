@@ -16,7 +16,7 @@ jobs:
     - stage: build stage test
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t helloworld:stage . --no-cache
+      - docker build -t helloworld:stage .
       - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:stage
       - docker push $DOCKER_USERNAME/helloworld:stage
     - stage: test docker image

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main ((sdf)
+int main (void)
 {
   printf ("Hello, World!\n");
   return 0;
