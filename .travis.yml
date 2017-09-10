@@ -9,4 +9,7 @@ python:
   - 3.5
 
 install:
-  - docker build -t helloworld .
+  - docker build -t helloworld:latest .
+
+script:
+  docker run --rm helloworld:latest
