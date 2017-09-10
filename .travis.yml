@@ -10,13 +10,13 @@ python:
 before_install:
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-  
+
 jobs:
   include:
     - stage: build stage test
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t helloworld:stage .
+      - docker build -t helloworld:stage . --no-cache
       - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:stage
       - docker push $DOCKER_USERNAME/helloworld:stage
     - stage: test docker image
