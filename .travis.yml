@@ -2,3 +2,11 @@ sudo: required
 
 services:
   - docker
+
+language: python
+python:
+  - 2.7
+  - 3.5
+
+install:
+  - docker build -t helloworld .
