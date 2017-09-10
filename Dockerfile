@@ -5,4 +5,5 @@ RUN mkdir /app
 WORKDIR /app
 COPY hello.c /app
 RUN gcc -Wall hello.c -o hello
+RUN apk del alpine-sdk
 CMD /app/hello
