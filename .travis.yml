@@ -9,9 +9,9 @@ python:
 
 jobs:
   include:
-    - stage: Build Docker Image
-    script:
+    - stage: build stage test
+      script:
       - docker build -t helloworld:stage .
-    - stage: Test Docker Image
-    script: docker run --tm helloworld:stage
-    
+    - stage: test docker image
+      script:
+      - docker run --tm helloworld:stage
