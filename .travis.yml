@@ -7,8 +7,25 @@ language: python
 python:
   - 3.5
 
-install:
-  - docker build -t helloworld:latest .
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
 
-script:
-  docker run --rm helloworld:latest
+jobs:
+  include:
+    - stage: build stage test
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t helloworld:stage .
+
+    - stage: test docker image
+      script:
+      - docker run --rm $DOCKER_USERNAME/helloworld:stage
+
+  after_success:
+  - test $TRAVIS_BRANCH = "master" &&
+    - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:latest
+    - docker push $DOCKER_USERNAME/helloworld:latest
+  - test $TRAVIS_BRANCH = "stage" &&
+    - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:stage
+    - docker push $DOCKER_USERNAME/helloworld:stage
