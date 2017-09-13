@@ -17,8 +17,15 @@ jobs:
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t helloworld:stage .
-      - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:stage
-      - docker push $DOCKER_USERNAME/helloworld:stage
+
     - stage: test docker image
       script:
       - docker run --rm $DOCKER_USERNAME/helloworld:stage
+
+  after_success:
+  - test $TRAVIS_BRANCH = "master" &&
+    - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:latest
+    - docker push $DOCKER_USERNAME/helloworld:latest
+  - test $TRAVIS_BRANCH = "stage" &&
+    - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:stage
+    - docker push $DOCKER_USERNAME/helloworld:stage
