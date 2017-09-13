@@ -4,7 +4,7 @@ RUN apk update && apk add --update alpine-sdk
 RUN mkdir /app
 WORKDIR /app
 COPY hello.c /app
-RUN gcc -Wall -pedantic-errors -Bstatic hello.c -o hello
+RUN gcc -Wall -pedantic-errors hello.c -o hello
 CMD /app/hello
 
 FROM alpine:3.6
