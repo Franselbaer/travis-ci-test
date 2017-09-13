@@ -13,19 +13,24 @@ before_install:
 
 jobs:
   include:
-    - stage: build stage test
+    - stage: build and push
       script:
+      - docker build -t helloworld:test .
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t helloworld:stage .
+      - docker tag helloworld:test $DOCKER_USERNAME/helloworld:test
+      - docker push $DOCKER_USERNAME/helloworld:test
 
     - stage: test docker image
       script:
-      - docker run --rm $DOCKER_USERNAME/helloworld:stage
+        test:
+        - docker run --rm $DOCKER_USERNAME/helloworld:test
 
   after_success:
   - test $TRAVIS_BRANCH = "master" &&
+    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:latest
     - docker push $DOCKER_USERNAME/helloworld:latest
   - test $TRAVIS_BRANCH = "stage" &&
+    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     - docker tag helloworld:stage $DOCKER_USERNAME/helloworld:stage
     - docker push $DOCKER_USERNAME/helloworld:stage
