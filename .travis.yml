@@ -21,9 +21,8 @@ jobs:
       - docker push $DOCKER_USERNAME/helloworld:test
 
     - stage: test docker image
-      script:
-        test:
-        - docker run --rm $DOCKER_USERNAME/helloworld:test
+      test:
+      - docker run --rm $DOCKER_USERNAME/helloworld:test
 
   after_success:
   - test $TRAVIS_BRANCH = "master" &&
