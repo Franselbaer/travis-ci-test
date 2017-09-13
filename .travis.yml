@@ -11,10 +11,7 @@ install:
 
 script:
   - docker build -t helloworld:test .
-  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker tag helloworld:test $DOCKER_USERNAME/helloworld:test
-  - docker push $DOCKER_USERNAME/helloworld:test
-  - docker run --rm $DOCKER_USERNAME/helloworld:test
+  - docker run --rm helloworld:test
 
 after_success:
   - echo $TRAVIS_BRANCH
