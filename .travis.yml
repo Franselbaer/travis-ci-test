@@ -17,7 +17,7 @@ after_success:
   - echo $TRAVIS_BRANCH
   - echo $TRAVIS_PULL_REQUEST
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-      if [ "$TRAVIS_BRANCH" = "master"]; then
+      if [ "$TRAVIS_BRANCH" = "master" ]; then
         docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
         docker tag helloworld:test $DOCKER_USERNAME/helloworld:latest
         docker push $DOCKER_USERNAME/helloworld:latest
@@ -27,4 +27,3 @@ after_success:
         docker push $DOCKER_USERNAME/helloworld:latest
       fi
     fi
-  
